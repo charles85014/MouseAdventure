@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     {
         master = this;
 
+        GameDefinition.WidthOffset = (float)Screen.width / GameDefinition.StandardScreenWidth;
+        GameDefinition.HeightOffset = (float)Screen.height / GameDefinition.StandardScreenHeight;
+
         switch (this.CurrentScene)
         {
             case GameDefinition.SceneIndex.Title:
@@ -37,6 +40,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameDefinition.WidthOffset = (float)Screen.width / GameDefinition.StandardScreenWidth;
+        GameDefinition.HeightOffset = (float)Screen.height / GameDefinition.StandardScreenHeight;
+
         switch (this.CurrentScene)
         {
             case GameDefinition.SceneIndex.Title:
