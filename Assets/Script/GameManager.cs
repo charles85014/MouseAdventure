@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
             case GameDefinition.SceneIndex.Title:
                 break;
 
-            case GameDefinition.SceneIndex.ChoosePlayerScene:
+            case GameDefinition.SceneIndex.Atlas:
                 break;
 
             case GameDefinition.SceneIndex.GameScene:
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         {
             case GameDefinition.SceneIndex.Title:
                 break;
-            case GameDefinition.SceneIndex.ChoosePlayerScene:
+            case GameDefinition.SceneIndex.Atlas:
                 break;
             case GameDefinition.SceneIndex.GameScene:
             default:
