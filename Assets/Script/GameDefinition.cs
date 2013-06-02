@@ -12,6 +12,6 @@ public class GameDefinition
 
     public enum SceneIndex
     {
-        Title = 0, Atlas = 1, GameScene = 2
+        Title = 0, Atlas = 1, Stage01 = 2
     }
 }
