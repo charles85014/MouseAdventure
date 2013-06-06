@@ -71,6 +71,17 @@ public class GameManager : MonoBehaviour
         switch (choose)
         {
             case UIButtonEvent.Nothing:
+
+                break;
+
+            case UIButtonEvent.LeftMove:
+                GameObject.Find("Mouse").renderer.material.mainTextureScale = new Vector2(-1, 1);
+                GameObject.Find("Mouse").GetComponent<MouseMove>().MouseDirect = 2;
+                break;
+
+            case UIButtonEvent.RightMove:
+                GameObject.Find("Mouse").renderer.material.mainTextureScale = new Vector2(1, 1);
+                GameObject.Find("Mouse").GetComponent<MouseMove>().MouseDirect = 1;
                 break;
 
             default:
@@ -99,7 +110,7 @@ public class GameManager : MonoBehaviour
 
     public enum UIButtonEvent
     {
-        Nothing = 0
+        Nothing = 0, LeftMove, RightMove
     }
 
     public enum GameValue
