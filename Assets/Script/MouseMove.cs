@@ -50,17 +50,30 @@ public class MouseMove : MonoBehaviour
         if (isGameStart)
         {
 
-            if (MouseDirect == 1)
-                rigidbody.velocity = new Vector3(MouseSpeed * Time.deltaTime, -0.1f, 0);
-
-            if (MouseDirect == 2)
-                rigidbody.velocity = new Vector3(-MouseSpeed * Time.deltaTime, -0.1f, 0);
 
             if (IsGrounded())
             {
+                if (MouseDirect == 1)
+                    rigidbody.velocity = new Vector3(MouseSpeed * Time.deltaTime, -0.1f, 0);
+
+                if (MouseDirect == 2)
+                    rigidbody.velocity = new Vector3(-MouseSpeed * Time.deltaTime, -0.1f, 0);
+
+
+                print("在地上");
                 if (!IsInvoking("MouseChangPic"))
                     Invoke("MouseChangPic", 0.2f);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    //rigidbody.velocity += new Vector3(0, 50, 0);
+                    rigidbody.AddForce(0, 100, 0);
+                }
+            }
+            else
+            {
+                rigidbody.velocity = new Vector3(0, Physics.gravity.y, 0);
 
+                print("在空中");
             }
 
         }
@@ -69,7 +82,13 @@ public class MouseMove : MonoBehaviour
     RaycastHit hit;
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f);
+        return Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 0, 0);
+        Gizmos.DrawRay(transform.position, -Vector3.up * distToGround);
     }
 
 
