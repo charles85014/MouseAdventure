@@ -73,9 +73,7 @@ public class HitGameButton : MonoBehaviour
 
                         foreach (var script in this.transform.parent.GetComponentsInChildren<HitGameButton>())
                         {
-                            if (script.RectIndex == left || script.RectIndex == right || script.RectIndex == top ||
-
-script.RectIndex == bottom || script.RectIndex == self)
+                            if (script.RectIndex == left || script.RectIndex == right || script.RectIndex == top || script.RectIndex == bottom || script.RectIndex == self)
                             {
                                 if (script.RectLife > 0)
                                     script.RectLife--;
