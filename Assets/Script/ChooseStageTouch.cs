@@ -22,7 +22,7 @@ public class ChooseStageTouch : MonoBehaviour
         {
             this.renderer.material.color = new Color(0, 0, 0, 0);
             GameObject obj = (GameObject)Instantiate(GameManager.master.LoadSceneObject);
-            obj.GetComponent<LoadNextScene>().SetLoadScene(GameDefinition.SceneIndex.Stage01);
+            obj.GetComponent<LoadNextScene>().SetLoadScene(GameDefinition.SceneIndex.第一神殿第一關);
             Destroy(GameObject.Find("UI"));
         }
     }

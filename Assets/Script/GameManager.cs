@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
             case GameDefinition.SceneIndex.Atlas:
                 break;
 
-            case GameDefinition.SceneIndex.Stage01:
+            case GameDefinition.SceneIndex.第一神殿第一關:
                 break;
 
             default:
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameDefinition.SceneIndex.Atlas:
                 break;
-            case GameDefinition.SceneIndex.Stage01:
+            case GameDefinition.SceneIndex.第一神殿第一關:
             default:
                 break;
         }
