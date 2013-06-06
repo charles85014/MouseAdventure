@@ -7,12 +7,10 @@ using System.Collections;
 [RequireComponent(typeof(UIBase))]
 public class HitGameButton : MonoBehaviour
 {
-    public GameManager.UIButtonEvent ButtonEvent;   //Buton Event
     public Texture[] TextureResoure;   //¶K¹Ï¯À§÷
 
-    public int RectLife;      //¿j¶ô¥Í©R
+    public int RectLife;        //¿j¶ô¥Í©R
     public int RectIndex;       //¿j¶ô¯Á¤Þ­È
-
 
     private UIBase uiBase;
 
@@ -26,7 +24,7 @@ public class HitGameButton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        this.RectLife = Random.Range(1, this.TextureResoure.Length + 1);
     }
 
     void Update()
@@ -41,7 +39,10 @@ public class HitGameButton : MonoBehaviour
             GUI.depth = this.uiBase.GUIdepth;
             GUI.color = this.uiBase.CurrentColor;
 
-            this.uiBase.TextureStyle.normal.background = (Texture2D)this.TextureResoure[this.RectLife - 1];
+            if (this.RectLife - 1 == -1)
+                this.uiBase.TextureStyle.normal.background = null;
+            else
+                this.uiBase.TextureStyle.normal.background = (Texture2D)this.TextureResoure[this.RectLife - 1];
 
             if (GUI.Button(new Rect(
                 this.uiBase.CurrentRect.x * GameDefinition.WidthOffset,
@@ -52,7 +53,40 @@ public class HitGameButton : MonoBehaviour
                 this.uiBase.TextureStyle
                 ))
             {
-                GameManager.UIButtonClick(this.ButtonEvent);
+                if (!HitGameManager.master.isColdDown)
+                {
+                    if (this.RectLife == 1)
+                    {
+                        int count = this.transform.parent.GetComponentsInChildren<HitGameButton>().Length;
+                        int width = (int)Mathf.Sqrt(count);
+
+                        int left = ((this.RectIndex - 1) >= 0) ? this.RectIndex - 1 : -1;
+                        int right = ((this.RectIndex + 1) < count) ? this.RectIndex + 1 : -1;
+                        int top = ((this.RectIndex - width) >= 0) ? this.RectIndex - 3 : -1;
+                        int bottom = ((this.RectIndex + width) < count) ? this.RectIndex + 3 : -1;
+                        int self = this.RectIndex;
+
+                        if (self % width == 0)
+                            left = -1;
+                        else if (self % width == (width - 1))
+                            right = -1;
+
+                        foreach (var script in this.transform.parent.GetComponentsInChildren<HitGameButton>())
+                        {
+                            if (script.RectIndex == left || script.RectIndex == right || script.RectIndex == top || script.RectIndex == bottom || script.RectIndex == self)
+                            {
+                                if (script.RectLife > 0)
+                                    script.RectLife--;
+                            }
+                        }
+                        HitGameManager.master.StartColdDown();
+                    }
+                    else if (this.RectLife > 0)
+                    {
+                        this.RectLife--;
+                        HitGameManager.master.StartColdDown();
+                    }
+                }
             }
         }
     }
