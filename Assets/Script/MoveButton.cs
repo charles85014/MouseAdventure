@@ -5,14 +5,11 @@ using System.Collections;
 /// 第一種遊戲-打磚塊的Button
 /// </summary>
 [RequireComponent(typeof(UIBase))]
-public class HitGameButton : MonoBehaviour
+public class MoveButton : MonoBehaviour
 {
-    public GameManager.UIButtonEvent ButtonEvent;   //Buton Event
-    public Texture[] TextureResoure;   //貼圖素材
+    public GameManager.UIButtonEvent clickEvent;
 
-    public int RectLife;      //磚塊生命
-    public int RectIndex;       //磚塊索引值
-
+    public Texture TextureResoure;   //貼圖素材
 
     private UIBase uiBase;
 
@@ -26,7 +23,7 @@ public class HitGameButton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+      
     }
 
     void Update()
@@ -41,7 +38,7 @@ public class HitGameButton : MonoBehaviour
             GUI.depth = this.uiBase.GUIdepth;
             GUI.color = this.uiBase.CurrentColor;
 
-            this.uiBase.TextureStyle.normal.background = (Texture2D)this.TextureResoure[this.RectLife - 1];
+            this.uiBase.TextureStyle.normal.background = (Texture2D)this.TextureResoure;
 
             if (GUI.Button(new Rect(
                 this.uiBase.CurrentRect.x * GameDefinition.WidthOffset,
@@ -52,7 +49,8 @@ public class HitGameButton : MonoBehaviour
                 this.uiBase.TextureStyle
                 ))
             {
-                GameManager.UIButtonClick(this.ButtonEvent);
+                
+                GameManager.UIButtonClick(clickEvent);
             }
         }
     }

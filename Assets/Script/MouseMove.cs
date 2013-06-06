@@ -6,7 +6,7 @@ public class MouseMove : MonoBehaviour
     public float distToGround;
 
     public Texture2D Mouse01, Mouse02;
-    int MouseDirect = 1;
+    public int MouseDirect = 1;
 
     int MousePicCount = 0;
     public float MouseSpeed;
