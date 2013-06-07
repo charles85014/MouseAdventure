@@ -84,6 +84,15 @@ public class GameManager : MonoBehaviour
                 GameObject.Find("Mouse").GetComponent<MouseMove>().MouseDirect = 1;
                 break;
 
+            case UIButtonEvent.Jump:
+                if (GameObject.Find("Mouse").GetComponent<MouseMove>().isJump == false
+                     && GameObject.Find("Mouse").GetComponent<MouseMove>().inTheAir == false)
+                {
+                    GameObject.Find("Mouse").GetComponent<MouseMove>().isJump = true;
+                }
+                
+                break;
+
             default:
                 break;
         }
@@ -110,7 +119,7 @@ public class GameManager : MonoBehaviour
 
     public enum UIButtonEvent
     {
-        Nothing = 0, LeftMove, RightMove
+        Nothing = 0, LeftMove, RightMove,Jump
     }
 
     public enum GameValue

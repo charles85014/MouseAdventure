@@ -10,9 +10,16 @@ public class MouseMove : MonoBehaviour
 
     private int MousePicCount = 0;
     public float MouseSpeed;
+    public float JumpForce;
+    public float JumpTime;
+    public float DropForce;
+    
 
     public GameObject CountDownObject;
     public bool isGameStart = false;
+    public bool isJump = false;
+    public bool inTheAir = false;
+    float JumpStep = 0;
 
     // Use this for initialization
     void Start()
@@ -36,6 +43,7 @@ public class MouseMove : MonoBehaviour
         }
     }
 
+
     IEnumerator CountDownStart()
     {
         this.CountDownObject.SetActive(true);
@@ -48,25 +56,46 @@ public class MouseMove : MonoBehaviour
     {
         if (isGameStart)
         {
-            if (IsGrounded())   //在地上
-            {
+            if (isJump == true) {
+                inTheAir = true;
+                this.renderer.material.mainTexture = Mouse01;
                 if (MouseDirect == 1)
-                    rigidbody.velocity = new Vector3(MouseSpeed * Time.deltaTime, -0.1f, 0);
+                    rigidbody.velocity = new Vector3(MouseSpeed, 0, 0);
 
                 if (MouseDirect == 2)
-                    rigidbody.velocity = new Vector3(-MouseSpeed * Time.deltaTime, -0.1f, 0);
-
-                if (!IsInvoking("MouseChangPic"))
-                    Invoke("MouseChangPic", 0.2f);
-                if (Input.GetKeyDown(KeyCode.Space))
+                    rigidbody.velocity = new Vector3(-MouseSpeed, 0, 0);
+                if (JumpStep < JumpTime)
                 {
-                    //rigidbody.velocity += new Vector3(0, 50, 0);
-                    rigidbody.AddForce(0, 1000, 0);
+                    rigidbody.AddForce(0, JumpForce, 0);
+                    JumpStep += Time.deltaTime;
+                    print(JumpStep);
+                }
+                else
+                {
+                    isJump = false;
+                    JumpStep = 0;
                 }
             }
-            else                    //在空中
+            else if (IsGrounded())   //在地上
             {
-                rigidbody.velocity = new Vector3(0, Physics.gravity.y, 0);
+                inTheAir = false;
+                    if (MouseDirect == 1)
+                        rigidbody.velocity = new Vector3(MouseSpeed, -DropForce, 0);
+
+                    if (MouseDirect == 2)
+                        rigidbody.velocity = new Vector3(-MouseSpeed, -DropForce, 0);
+
+                    if (!IsInvoking("MouseChangPic"))
+                        Invoke("MouseChangPic", 0.2f);
+            }
+            else if (!IsGrounded() && isJump == false)             //在空中
+            {
+                this.renderer.material.mainTexture = Mouse01;
+                if (MouseDirect == 1)
+                    rigidbody.velocity = new Vector3(MouseSpeed, -DropForce, 0);
+
+                if (MouseDirect == 2)
+                    rigidbody.velocity = new Vector3(-MouseSpeed, -DropForce, 0);
             }
 
         }
