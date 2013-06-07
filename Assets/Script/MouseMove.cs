@@ -8,7 +8,7 @@ public class MouseMove : MonoBehaviour
     public Texture2D Mouse01, Mouse02;
     public int MouseDirect = 1;
 
-    int MousePicCount = 0;
+    private int MousePicCount = 0;
     public float MouseSpeed;
 
     public GameObject CountDownObject;
@@ -34,7 +34,6 @@ public class MouseMove : MonoBehaviour
             this.renderer.material.mainTexture = Mouse02;
             MousePicCount--;
         }
-
     }
 
     IEnumerator CountDownStart()
@@ -49,9 +48,7 @@ public class MouseMove : MonoBehaviour
     {
         if (isGameStart)
         {
-
-
-            if (IsGrounded())
+            if (IsGrounded())   //在地上
             {
                 if (MouseDirect == 1)
                     rigidbody.velocity = new Vector3(MouseSpeed * Time.deltaTime, -0.1f, 0);
@@ -59,21 +56,17 @@ public class MouseMove : MonoBehaviour
                 if (MouseDirect == 2)
                     rigidbody.velocity = new Vector3(-MouseSpeed * Time.deltaTime, -0.1f, 0);
 
-
-                print("在地上");
                 if (!IsInvoking("MouseChangPic"))
                     Invoke("MouseChangPic", 0.2f);
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     //rigidbody.velocity += new Vector3(0, 50, 0);
-                    rigidbody.AddForce(0, 100, 0);
+                    rigidbody.AddForce(0, 1000, 0);
                 }
             }
-            else
+            else                    //在空中
             {
                 rigidbody.velocity = new Vector3(0, Physics.gravity.y, 0);
-
-                print("在空中");
             }
 
         }
@@ -82,16 +75,19 @@ public class MouseMove : MonoBehaviour
     RaycastHit hit;
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround);
+        if (Physics.Raycast(transform.position - new Vector3((GetComponent<BoxCollider>().size.x * this.transform.localScale.x) / 2, 0, 0), -Vector3.up, out hit, distToGround) ||
+            Physics.Raycast(transform.position + new Vector3((GetComponent<BoxCollider>().size.x * this.transform.localScale.x) / 2, 0, 0), -Vector3.up, out hit, distToGround) ||
+            Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround))
+            return true;
+
+        return false;
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0);
         Gizmos.DrawRay(transform.position, -Vector3.up * distToGround);
+        Gizmos.DrawRay(transform.position - new Vector3((GetComponent<BoxCollider>().size.x * this.transform.localScale.x) / 2, 0, 0), -Vector3.up * distToGround);
+        Gizmos.DrawRay(transform.position + new Vector3((GetComponent<BoxCollider>().size.x * this.transform.localScale.x) / 2, 0, 0), -Vector3.up * distToGround);
     }
-
-
-
-
 }
