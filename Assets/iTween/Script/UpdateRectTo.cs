@@ -21,7 +21,7 @@ public class UpdateRectTo : MonoBehaviour
     public void RunUpdate()
     {
         this.uiBase.TextureStyle.wordWrap = false;
-        this.uiBase.StopRectTo();
+        //this.uiBase.StopRectTo();
         this.RectTo();
     }
 

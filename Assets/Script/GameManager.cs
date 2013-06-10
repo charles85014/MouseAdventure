@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameDefinition.SceneIndex.第一神殿第一關:
+                StartCoroutine(CountDownStart());
                 break;
 
             default:
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
             case GameDefinition.SceneIndex.Atlas:
                 break;
             case GameDefinition.SceneIndex.第一神殿第一關:
+                break;
             default:
                 break;
         }
@@ -75,22 +77,30 @@ public class GameManager : MonoBehaviour
                 break;
 
             case UIButtonEvent.LeftMove:
-                GameObject.Find("Mouse").renderer.material.mainTextureScale = new Vector2(-1, 1);
-                GameObject.Find("Mouse").GetComponent<MouseMove>().MouseDirect = 2;
+                if (MouseController.master.isRunning)
+                {
+                    MouseController.master.renderer.material.mainTextureScale = new Vector2(-1, 1);
+                    MouseController.master.MouseDirect = MouseController.MouseDirection.Left;
+                }
                 break;
 
             case UIButtonEvent.RightMove:
-                GameObject.Find("Mouse").renderer.material.mainTextureScale = new Vector2(1, 1);
-                GameObject.Find("Mouse").GetComponent<MouseMove>().MouseDirect = 1;
+                if (MouseController.master.isRunning)
+                {
+                    MouseController.master.renderer.material.mainTextureScale = new Vector2(1, 1);
+                    MouseController.master.MouseDirect = MouseController.MouseDirection.Right;
+                }
                 break;
 
             case UIButtonEvent.Jump:
-                if (GameObject.Find("Mouse").GetComponent<MouseMove>().isJump == false
-                     && GameObject.Find("Mouse").GetComponent<MouseMove>().inTheAir == false)
+                if (MouseController.master.isRunning)
                 {
-                    GameObject.Find("Mouse").GetComponent<MouseMove>().isJump = true;
+                    if (MouseController.master.isJump == false
+                         && MouseController.master.inTheAir == false)
+                    {
+                        MouseController.master.isJump = true;
+                    }
                 }
-                
                 break;
 
             default:
@@ -110,6 +120,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator CountDownStart()
+    {
+        yield return new WaitForSeconds(3);
+        MouseController.master.ChangeRunState(true);
+        GameTimer.master.isRunTimer = true;
+    }
+
     #region Enum Define
 
     public enum GameState
@@ -119,7 +136,7 @@ public class GameManager : MonoBehaviour
 
     public enum UIButtonEvent
     {
-        Nothing = 0, LeftMove, RightMove,Jump
+        Nothing = 0, LeftMove, RightMove, Jump
     }
 
     public enum GameValue

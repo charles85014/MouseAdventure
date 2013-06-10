@@ -76,7 +76,15 @@ public class HitGameButton : MonoBehaviour
                             if (script.RectIndex == left || script.RectIndex == right || script.RectIndex == top || script.RectIndex == bottom || script.RectIndex == self)
                             {
                                 if (script.RectLife > 0)
+                                {
                                     script.RectLife--;
+                                    if (script.RectLife == 0)
+                                    {
+                                        HitGameManager.master.TotalLife--;
+                                        if (HitGameManager.master.TotalLife == 0)
+                                            HitGameManager.master.StartDestroy();
+                                    }
+                                }
                             }
                         }
                         HitGameManager.master.StartColdDown();
@@ -84,6 +92,13 @@ public class HitGameButton : MonoBehaviour
                     else if (this.RectLife > 0)
                     {
                         this.RectLife--;
+                        if (this.RectLife == 0)
+                        {
+                            HitGameManager.master.TotalLife--;
+                            if (HitGameManager.master.TotalLife == 0)
+                                HitGameManager.master.StartDestroy();
+                        }
+
                         HitGameManager.master.StartColdDown();
                     }
                 }

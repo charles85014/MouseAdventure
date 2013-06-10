@@ -5,6 +5,11 @@ public class HitGameManager : MonoBehaviour
 {
     public static HitGameManager master;
 
+    [HideInInspector]
+    public GameTrigger TriggerScript;
+
+    public int TotalLife;
+
     public float ColdDownTime;
     public bool isColdDown { get; private set; }
 
@@ -30,5 +35,19 @@ public class HitGameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void StartDestroy()
+    {
+        this.GetComponentInChildren<UpdateRectTo>().RunUpdate();
+        StartCoroutine(RunDestroy(this.GetComponentInChildren<UpdateRectTo>().RectTime));
+    }
+
+    IEnumerator RunDestroy(float time)
+    {
+        yield return new WaitForSeconds(time);
+        MouseController.master.ChangeRunState(true);
+        this.TriggerScript.EndRunPillar();
+        Destroy(this.gameObject);
     }
 }
