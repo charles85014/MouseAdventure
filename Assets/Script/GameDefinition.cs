@@ -14,4 +14,18 @@ public class GameDefinition
     {
         Title = 0, Atlas = 1, 第一神殿第一關 = 2, 第一神殿第二關 = 3
     }
+
+    public enum TextContentIndex
+    {
+        None = 0
+    }
+
+    public static string GetTextContent(TextContentIndex content)
+    {
+        switch (content)
+        {
+            default:
+                return null;
+        }
+    }
 }

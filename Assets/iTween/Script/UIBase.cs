@@ -4,7 +4,7 @@ using System.Collections;
 public class UIBase : MonoBehaviour
 {
     public int GUIdepth;            //貼圖深度(值越小越後畫)
-    //public float fontSize;
+    public float fontSize;
     public GUIStyle TextureStyle;   //貼圖style
 
     // ITween color data
@@ -72,7 +72,7 @@ public class UIBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //this.TextureStyle.fontSize = (int)(this.fontSize * GameDefinition.WidthOffset);
+        this.TextureStyle.fontSize = (int)(this.fontSize * GameDefinition.WidthOffset);
     }
 
     void RectTo()

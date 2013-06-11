@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameDefinition.SceneIndex.第一神殿第一關:
+            case GameDefinition.SceneIndex.第一神殿第二關:
                 StartCoroutine(CountDownStart());
                 break;
 
