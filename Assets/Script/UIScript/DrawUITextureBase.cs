@@ -4,7 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(UIBase))]
 public class DrawUITextureBase : MonoBehaviour
 {
-    private UIBase uiBase;
+    [HideInInspector]
+    public UIBase uiBase;
     public Texture TextureResoure;   //¶K¹Ï¯À§÷
 
     void Awake()
@@ -17,15 +18,16 @@ public class DrawUITextureBase : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.uiBase.TextureStyle.normal.background = (Texture2D)this.TextureResoure;
+        if (this.TextureResoure)
+            this.uiBase.TextureStyle.normal.background = (Texture2D)this.TextureResoure;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    
+
     void OnGUI()
     {
         GUI.depth = this.uiBase.GUIdepth;

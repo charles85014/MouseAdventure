@@ -8,14 +8,26 @@ public class GameTrigger : MonoBehaviour
     public float RunDistance;
     public LayerMask MouseLayer;
 
+    private bool isEnd = false;
+
     void OnTriggerEnter(Collider other)
     {
-        if (((1 << other.gameObject.layer) & this.MouseLayer.value) > 0)
+        if (!this.isEnd)
         {
-            //Do Something
-            MouseController.master.ChangeRunState(false);
-            GameObject obj = (GameObject)Instantiate(this.GameUIObject);
-            obj.GetComponent<HitGameManager>().TriggerScript = this;
+            if (((1 << other.gameObject.layer) & this.MouseLayer.value) > 0)
+            {
+                //Do Something
+                MouseController.master.ChangeRunState(false);
+                GameObject obj = (GameObject)Instantiate(this.GameUIObject);
+
+                if (obj.GetComponent<HitGameManager>())
+                    obj.GetComponent<HitGameManager>().TriggerScript = this;
+
+                if (obj.GetComponent<ShapeGameManager>())
+                    obj.GetComponent<ShapeGameManager>().TriggerScript = this;
+
+                this.isEnd = true;
+            }
         }
     }
 
