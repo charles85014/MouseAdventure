@@ -12,7 +12,8 @@ public class GameDefinition
 
     public enum SceneIndex
     {
-        Title = 0, Atlas = 1, 第一神殿第一關 = 2, 第一神殿第二關 = 3
+        Title = 0, Atlas = 1,
+        第一神殿選擇 = 100, 第一神殿第一關 = 101, 第一神殿第二關 = 102
     }
 
     public enum TextContentIndex
