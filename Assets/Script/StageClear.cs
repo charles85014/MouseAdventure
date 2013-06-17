@@ -5,7 +5,8 @@ using System.Collections;
 /// 過關後的STAGE CLEAR字幕
 /// </summary>
 [RequireComponent(typeof(UIBase))]
-public class StageClear : MonoBehaviour {
+public class StageClear : MonoBehaviour
+{
 
     public Texture TextureResoure;   //貼圖素材
 
@@ -22,7 +23,8 @@ public class StageClear : MonoBehaviour {
             Debug.LogWarning(this.name + " -UIBase" + "-Unset");
     }
 
-    void OnTriggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other)
+    {
 
         ClearPicAppear = 1;
         MouseController.master.ChangeRunState(false);
@@ -30,7 +32,8 @@ public class StageClear : MonoBehaviour {
 
     void OnGUI()
     {
-        if (ClearPicAppear == 1) {
+        if (ClearPicAppear == 1)
+        {
 
             GUI.depth = this.uiBase.GUIdepth;
             GUI.color = this.uiBase.CurrentColor;
@@ -44,18 +47,21 @@ public class StageClear : MonoBehaviour {
                 this.uiBase.TextureStyle
                 );
         }
-        
+
     }
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         if (this.TextureResoure)
             this.uiBase.TextureStyle.normal.background = (Texture2D)this.TextureResoure;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (ClearPicAppear == 1)
         {
+            Destroy(GameObject.Find("GameTimer"));
             TimeConter += Time.deltaTime;
             if (TimeConter > 2)
                 NextS = true;
@@ -66,8 +72,8 @@ public class StageClear : MonoBehaviour {
             {
                 GameObject obj = (GameObject)Instantiate(GameManager.master.LoadSceneObject);
                 obj.GetComponent<LoadNextScene>().SetLoadScene(GameDefinition.SceneIndex.第一神殿選擇);
-             
+
             }
         }
-	}
+    }
 }
